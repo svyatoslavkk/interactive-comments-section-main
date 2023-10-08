@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.scss';
 import imageAmyrobson from './image-amyrobson.png';
@@ -7,13 +7,15 @@ import imageMaxblagun from './image-maxblagun.png';
 import imageRamsesmiron from './image-ramsesmiron.png';
 
 function App() {
-  const commentsInfo = [
+  const [commentsInfo, setCommentsInfo] = useState([
     {
       image: imageAmyrobson,
       username: 'amyrobson',
       date: '1 month ago',
       comment: 'Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You\'ve nailed the design and the responsiveness at various breakpoints works really well.',
       numberOfLikes: 12,
+      hasUpvoted: false,
+      hasDownvoted: false,
     },
     {
       image: imageMaxblagun,
@@ -21,10 +23,12 @@ function App() {
       date: '2 weeks ago',
       comment: 'Woah, your project looks awesome! How long have you been coding for? I\'m still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React?\nThanks!',
       numberOfLikes: 5,
+      hasUpvoted: false,
+      hasDownvoted: false,
     },
-  ]
+  ]);
 
-  const replyComments = [
+  const [replyComments, setReplyComments] = useState([
     {
       image: imageRamsesmiron,
       username: 'ramsesmiron',
@@ -32,6 +36,8 @@ function App() {
       date: '1 week ago',
       comment: 'If you\'re still new, I\'d recommend focusing on the fundamentals of HTML, CSS and JS before considering React. It\'s very tempting to jump ahead but lay a solid foundation first.',
       numberOfLikes: 4,
+      hasUpvoted: false,
+      hasDownvoted: false,
     },
     {
       image: imageJuliusomo,
@@ -40,19 +46,82 @@ function App() {
       date: '2 days ago',
       comment: 'I couldn\'t agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.',
       numberOfLikes: 2,
+      hasUpvoted: false,
+      hasDownvoted: false,
     },
-    
-  ]
+  ]);
+  
+  const handleUpvote = (commentIndex: any, isReply: any) => {
+    if (isReply) {
+      const updatedReplyComments = [...replyComments];
+      if (!updatedReplyComments[commentIndex].hasUpvoted) {
+        updatedReplyComments[commentIndex].numberOfLikes += 1;
+        updatedReplyComments[commentIndex].hasUpvoted = true;
+        if (updatedReplyComments[commentIndex].hasDownvoted) {
+          updatedReplyComments[commentIndex].numberOfLikes += 1;
+          updatedReplyComments[commentIndex].hasDownvoted = false;
+        }
+        setReplyComments(updatedReplyComments);
+      }
+    } else {
+      const updatedComments = [...commentsInfo];
+      if (!updatedComments[commentIndex].hasUpvoted) {
+        updatedComments[commentIndex].numberOfLikes += 1;
+        updatedComments[commentIndex].hasUpvoted = true;
+        if (updatedComments[commentIndex].hasDownvoted) {
+          updatedComments[commentIndex].numberOfLikes += 1;
+          updatedComments[commentIndex].hasDownvoted = false;
+        }
+        setCommentsInfo(updatedComments);
+      }
+    }
+  };
+
+  const handleDownvote = (commentIndex: any, isReply: any) => {
+    if (isReply) {
+      const updatedReplyComments = [...replyComments];
+      if (!updatedReplyComments[commentIndex].hasDownvoted) {
+        updatedReplyComments[commentIndex].numberOfLikes -= 1;
+        updatedReplyComments[commentIndex].hasDownvoted = true;
+        if (updatedReplyComments[commentIndex].hasUpvoted) {
+          updatedReplyComments[commentIndex].numberOfLikes -= 1;
+          updatedReplyComments[commentIndex].hasUpvoted = false;
+        }
+        setReplyComments(updatedReplyComments);
+      }
+    } else {
+      const updatedComments = [...commentsInfo];
+      if (!updatedComments[commentIndex].hasDownvoted) {
+        updatedComments[commentIndex].numberOfLikes -= 1;
+        updatedComments[commentIndex].hasDownvoted = true;
+        if (updatedComments[commentIndex].hasUpvoted) {
+          updatedComments[commentIndex].numberOfLikes -= 1;
+          updatedComments[commentIndex].hasUpvoted = false;
+        }
+        setCommentsInfo(updatedComments);
+      }
+    }
+  };
 
   return (
     <div className='container'>
       <main>
-        {commentsInfo.map((item: any) => (
+        {commentsInfo.map((item: any, index) => (
           <div className='comment-item'>
             <div className='likes-counter-desktop'>
-                <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
+                <img 
+                  src="icon-plus.svg" 
+                  className='icon-plus' 
+                  alt="Icon Plus"
+                  onClick={() => handleUpvote(index, false)}
+                />
                 <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
-                <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
+                <img 
+                  src="icon-minus.svg" 
+                  className='icon-minus' 
+                  alt="Icon Minus"
+                  onClick={() => handleDownvote(index, false)}
+                />
             </div>
             <div>
               
@@ -89,13 +158,23 @@ function App() {
           <div className='replies-line'></div>
 
           <div className='comment-replies-items'>
-            {replyComments.map((item: any) => (
+            {replyComments.map((item: any, index) => (
               <div className='comment-item'>
               
                 <div className='likes-counter-desktop'>
-                    <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
+                    <img 
+                      src="icon-plus.svg" 
+                      className='icon-plus' 
+                      alt="Icon Plus"
+                      onClick={() => handleUpvote(index, true)}
+                    />
                     <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
-                    <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
+                    <img 
+                      src="icon-minus.svg" 
+                      className='icon-minus' 
+                      alt="Icon Minus"
+                      onClick={() => handleDownvote(index, true)}
+                    />
                 </div>
                 <div>
                   <div className='comment-item-header-desktop'>
