@@ -48,6 +48,10 @@ p {
     padding: 20px;
 }
 
+.comment-block {
+    margin-bottom: 1rem;
+}
+
 .comment-item {
     background-color: $white;
     padding: 15px;
@@ -139,6 +143,12 @@ p {
             font-weight: $font-weight-normal;
             color: $moderate-blue;
         }
+    }
+    
+    .reply:hover,
+    .reply:active,
+    .reply:focus {
+        opacity: $opacity-level;
     }
 }
 

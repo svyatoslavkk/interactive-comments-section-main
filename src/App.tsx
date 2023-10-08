@@ -52,16 +52,15 @@ function App() {
   ]);
 
   const [replyTarget, setReplyTarget] = useState(-1);
+  const [childReply, setChildReply] = useState(-1);
 
   const toggleReplyMode = (commentIndex: number) => {
     setReplyTarget((prevTarget) => (prevTarget === commentIndex ? -1 : commentIndex));
   };
 
-  const myUserData = [
-    {
-      image: imageJuliusomo,
-    },
-  ]
+  const togglechildReply = (commentIndex: number) => {
+    setChildReply((prevTarget) => (prevTarget === commentIndex ? -1 : commentIndex));
+  };
   
   const handleUpvote = (commentIndex: any, isReply: any) => {
     if (isReply) {
@@ -119,148 +118,162 @@ function App() {
     <div className='container'>
       <main>
         {commentsInfo.map((item: any, index) => (
-          <div className='comment-item'>
-            <div className='likes-counter-desktop'>
-                <img 
-                  src="icon-plus.svg" 
-                  className='icon-plus' 
-                  alt="Icon Plus"
-                  onClick={() => handleUpvote(index, false)}
-                />
-                <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
-                <img 
-                  src="icon-minus.svg" 
-                  className='icon-minus' 
-                  alt="Icon Minus"
-                  onClick={() => handleDownvote(index, false)}
-                />
-            </div>
+          <div className='comment-block'>
+            <div className='comment-item' key={index}>
+              <div className='likes-counter-desktop'>
+                  <img 
+                    src="icon-plus.svg" 
+                    className='icon-plus' 
+                    alt="Icon Plus"
+                    onClick={() => handleUpvote(index, false)}
+                  />
+                  <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
+                  <img 
+                    src="icon-minus.svg" 
+                    className='icon-minus' 
+                    alt="Icon Minus"
+                    onClick={() => handleDownvote(index, false)}
+                  />
+              </div>
 
-            <div>
-              
-                <div className='comment-item-header-desktop'>
-                  <div className='comment-item-header'>
-                    <img src={item.image} className='avatar-img' alt="Avatar Image" />
-                    <h4 className='username'>{item.username}</h4>
-                    <p className='date'>{item.date}</p>
-                  </div>
-                  <div className='reply-desktop' onClick={() => toggleReplyMode(index)}>
-                      <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                      <h4>Reply</h4>
-                  </div>
-                </div>
-                <p className='comment-text'>
-                  {item.comment}
-                </p>
-                <div className='comment-item-footer'>
-                  <div className='likes-counter'>
-                    <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
-                    <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
-                    <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
-                  </div>
-                  <div className='reply' onClick={() => toggleReplyMode(index)}>
-                    <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                    <h4>Reply</h4>
-                  </div>
-                </div>
-            </div>
-          </div>
-        ))}
-
-        {/* Reply comment writing */}
-        {replyTarget ? (
-          <div className='comment-item reply-comment'>
-            <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
-            <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
-            <button type="button" className='send-button'>Reply</button>
-          </div>
-        ) : null}
-
-        <div className='comment-replies-block'>
-          <div className='replies-line'></div>
-
-          <div className='comment-replies-items'>
-            {replyComments.map((item: any, index) => (
-              <div className='comment-item'>
-              
-                <div className='likes-counter-desktop'>
-                    <img 
-                      src="icon-plus.svg" 
-                      className='icon-plus' 
-                      alt="Icon Plus"
-                      onClick={() => handleUpvote(index, true)}
-                    />
-                    <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
-                    <img 
-                      src="icon-minus.svg" 
-                      className='icon-minus' 
-                      alt="Icon Minus"
-                      onClick={() => handleDownvote(index, true)}
-                    />
-                </div>
-                <div>
+              <div>
+                
                   <div className='comment-item-header-desktop'>
                     <div className='comment-item-header'>
                       <img src={item.image} className='avatar-img' alt="Avatar Image" />
                       <h4 className='username'>{item.username}</h4>
-                      {item.username === 'juliusomo' && (
-                        <div className='tag-you'>
-                          you
-                        </div>
-                      )}
                       <p className='date'>{item.date}</p>
                     </div>
-                    {item.username === 'juliusomo' ? (
-                        <div className='message-options-desktop'>
-                          <div className='delete'>
-                            <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
-                            <h4>Delete</h4>
-                          </div>
-                          <div className='edit'>
-                            <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
-                            <h4>Edit</h4>
-                          </div>
-                        </div>
-                    ) : (
-                      <div className='reply-desktop'>
-                          <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                          <h4>Reply</h4>
-                      </div>
-                    )}
+                    <div className='reply-desktop' onClick={() => toggleReplyMode(index)}>
+                        <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
+                        <h4>Reply</h4>
+                    </div>
                   </div>
-                    <p className='comment-text'>
-                      <span className='username-reply'>@{item.replyUsername}</span> {item.comment}
-                    </p>
-                    <div className='comment-item-footer'>
-                      <div className='likes-counter'>
-                        <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
-                        <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
-                        <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
+                  <p className='comment-text'>
+                    {item.comment}
+                  </p>
+                  <div className='comment-item-footer'>
+                    <div className='likes-counter'>
+                      <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
+                      <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
+                      <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
+                    </div>
+                    <div className='reply' onClick={() => toggleReplyMode(index)}>
+                      <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
+                      <h4>Reply</h4>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            {replyTarget === index && (
+              <div className='comment-item reply-comment'>
+                <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
+                <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
+                <button type="button" className='send-button'>Reply</button>
+              </div>
+            )}
+          </div>
+        ))}
+
+          
+        <div className='comment-replies-block'>
+          <div className='replies-line'></div>
+
+          <div>
+            <div className='comment-replies-items'>
+              {replyComments.map((item: any, index) => (
+                
+              <div className='comment-block'>
+                <div className='comment-item' key={index}>
+                
+                  <div className='likes-counter-desktop'>
+                      <img 
+                        src="icon-plus.svg" 
+                        className='icon-plus' 
+                        alt="Icon Plus"
+                        onClick={() => handleUpvote(index, true)}
+                      />
+                      <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
+                      <img 
+                        src="icon-minus.svg" 
+                        className='icon-minus' 
+                        alt="Icon Minus"
+                        onClick={() => handleDownvote(index, true)}
+                      />
+                  </div>
+                  <div>
+                    <div className='comment-item-header-desktop'>
+                      <div className='comment-item-header'>
+                        <img src={item.image} className='avatar-img' alt="Avatar Image" />
+                        <h4 className='username'>{item.username}</h4>
+                        {item.username === 'juliusomo' && (
+                          <div className='tag-you'>
+                            you
+                          </div>
+                        )}
+                        <p className='date'>{item.date}</p>
                       </div>
                       {item.username === 'juliusomo' ? (
-                        <div className='message-options'>
-                          <div className='delete'>
-                            <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
-                            <h4>Delete</h4>
+                          <div className='message-options-desktop'>
+                            <div className='delete'>
+                              <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
+                              <h4>Delete</h4>
+                            </div>
+                            <div className='edit'>
+                              <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
+                              <h4>Edit</h4>
+                            </div>
                           </div>
-                          <div className='edit'>
-                            <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
-                            <h4>Edit</h4>
-                          </div>
-                        </div>
                       ) : (
-                        <div className='reply'>
-                          <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                          <h4>Reply</h4>
+                        <div className='reply-desktop'  onClick={() => togglechildReply(index)}>
+                            <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
+                            <h4>Reply</h4>
                         </div>
                       )}
                     </div>
+                      <p className='comment-text'>
+                        <span className='username-reply'>@{item.replyUsername}</span> {item.comment}
+                      </p>
+                      <div className='comment-item-footer'>
+                        <div className='likes-counter'>
+                          <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
+                          <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
+                          <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
+                        </div>
+                        {item.username === 'juliusomo' ? (
+                          <div className='message-options'>
+                            <div className='delete'>
+                              <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
+                              <h4>Delete</h4>
+                            </div>
+                            <div className='edit'>
+                              <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
+                              <h4>Edit</h4>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className='reply'  onClick={() => togglechildReply(index)}>
+                            <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
+                            <h4>Reply</h4>
+                          </div>
+                        )}
+                      </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+                {childReply === index && (
+                  <div className='comment-item reply-comment'>
+                  <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
+                  <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
+                  <button type="button" className='send-button'>Reply</button>
+                  </div>
+                )}
+                </div>
+              ))}
+            </div>
           </div>
 
-        </div>
+          </div>
+
 
         <div className='add-comment-block'>
           <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
