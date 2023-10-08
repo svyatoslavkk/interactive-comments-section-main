@@ -50,6 +50,12 @@ function App() {
       hasDownvoted: false,
     },
   ]);
+
+  const myUserData = [
+    {
+      image: imageJuliusomo,
+    },
+  ]
   
   const handleUpvote = (commentIndex: any, isReply: any) => {
     if (isReply) {
@@ -123,6 +129,7 @@ function App() {
                   onClick={() => handleDownvote(index, false)}
                 />
             </div>
+
             <div>
               
                 <div className='comment-item-header-desktop'>
@@ -153,6 +160,13 @@ function App() {
             </div>
           </div>
         ))}
+
+        {/* Reply comment writing */}
+        <div className='comment-item reply-comment'>
+          <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
+          <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
+          <button type="button" className='send-button'>Reply</button>
+        </div>
 
         <div className='comment-replies-block'>
           <div className='replies-line'></div>
