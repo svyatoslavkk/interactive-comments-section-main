@@ -11,6 +11,7 @@ $font-size-paragraph: 16px;
 $font-weight-light: 400;
 $font-weight-normal: 500;
 $font-weight-bold: 700;
+$opacity-level: 0.5;
 
 * {
     margin: 0;
@@ -151,7 +152,7 @@ p {
 .reply-desktop:hover,
 .reply-desktop:active,
 .reply-desktop:focus {
-    opacity: 0.5;
+    opacity: $opacity-level;
 }
 
 .comment-replies-block {
@@ -175,6 +176,8 @@ p {
         text-align: center;
         align-items: center;
         justify-content: center;
+        cursor: pointer;
+        transition: 0.2s ease;
     }
 
     .delete {
@@ -197,6 +200,51 @@ p {
         }
     }
 }
+
+
+.message-options-desktop {
+    display: flex;
+
+    .delete,
+    .edit {
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.2s ease;
+    }
+
+    .delete {
+        .icon-delete {
+            margin-right: 0.5rem;
+        }
+        h4 {
+            color: $soft-red;
+            font-weight: $font-weight-normal;
+        }
+    }
+    .edit {
+        .icon-edit {
+            margin-right: 0.5rem;
+        }
+        margin-left: 1rem;
+        h4 {
+            color: $moderate-blue;
+            font-weight: $font-weight-normal;
+        }
+    }
+}
+
+.delete:hover,
+.delete:active,
+.delete:focus,
+.edit:hover,
+.edit:active,
+.edit:focus {
+    opacity: $opacity-level;
+}
+
 
 .add-comment-block {
     background-color: $white;
@@ -221,23 +269,53 @@ p {
         text-align: center;
         align-items: center;
         justify-content: space-between;
+    }
+}
 
-        .send-button {
-            text-transform: uppercase;
-            border: none;
-            padding: 0.8rem 1.7rem;
-            border-radius: 0.5rem;
-            color: $white;
-            background-color: $moderate-blue;
-            font-weight: $font-weight-light;
-            letter-spacing: 0.4px;
-        }
+.add-comment-block-desktop {
+    display: flex;
+    background-color: $white;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 1rem 0;
+
+    .add-comment-input {
+        width: 100%;
+        border-radius: 1rem;
+        min-height: 95px;
+        border: 1px solid $light-gray;
+        outline: none;
+        margin-bottom: 1.5rem;
+        padding: 1rem 1.5rem;
     }
 }
 
 .comment-item-header-desktop {
     display: flex;
     justify-content: space-between;
+}
+
+.send-button {
+    text-transform: uppercase;
+    border: none;
+    padding: 0.8rem 1.7rem;
+    border-radius: 0.5rem;
+    color: $white;
+    background-color: $moderate-blue;
+    font-weight: $font-weight-light;
+    letter-spacing: 0.4px;
+    max-height: 50px;
+    max-width: 106px;
+    min-height: 50px;
+    min-width: 106px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.send-button:hover,
+.send-button:active,
+.send-button:focus {
+    opacity: $opacity-level;
 }
 
 @media (max-width: 768px) {
@@ -250,6 +328,12 @@ p {
     .replies-line {
         margin-right: 1rem;
     }
+    .add-comment-block-desktop {
+        display: none;
+    }
+    .message-options-desktop {
+        display: none;
+    }
   }
 
 @media (min-width: 768px) {
@@ -260,6 +344,10 @@ p {
     }
 
     .comment-item-footer {
+        display: none;
+    }
+
+    .message-options {
         display: none;
     }
 
@@ -285,5 +373,13 @@ p {
 
     .replies-line {
         margin: 0 2.5rem;
+    }
+
+    .add-comment-block {
+        display: none;
+    }
+
+    .add-comment-input {
+        margin-right: 1rem;
     }
 }

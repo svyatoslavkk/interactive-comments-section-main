@@ -188,10 +188,23 @@ function App() {
                       )}
                       <p className='date'>{item.date}</p>
                     </div>
-                    <div className='reply-desktop'>
-                        <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                        <h4>Reply</h4>
-                    </div>
+                    {item.username === 'juliusomo' ? (
+                        <div className='message-options-desktop'>
+                          <div className='delete'>
+                            <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
+                            <h4>Delete</h4>
+                          </div>
+                          <div className='edit'>
+                            <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
+                            <h4>Edit</h4>
+                          </div>
+                        </div>
+                    ) : (
+                      <div className='reply-desktop'>
+                          <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
+                          <h4>Reply</h4>
+                      </div>
+                    )}
                   </div>
                     <p className='comment-text'>
                       <span className='username-reply'>@{item.replyUsername}</span> {item.comment}
@@ -202,10 +215,23 @@ function App() {
                         <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
                         <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
                       </div>
-                      <div className='reply'>
-                        <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                        <h4>Reply</h4>
-                      </div>
+                      {item.username === 'juliusomo' ? (
+                        <div className='message-options'>
+                          <div className='delete'>
+                            <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
+                            <h4>Delete</h4>
+                          </div>
+                          <div className='edit'>
+                            <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
+                            <h4>Edit</h4>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className='reply'>
+                          <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
+                          <h4>Reply</h4>
+                        </div>
+                      )}
                     </div>
                 </div>
               </div>
@@ -220,6 +246,12 @@ function App() {
             <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
             <button type="button" className='send-button'>Send</button>
           </div>
+        </div>
+
+        <div className='add-comment-block-desktop'>
+          <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
+          <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
+          <button type="button" className='send-button'>Send</button>
         </div>
       </main>
     </div>
