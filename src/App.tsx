@@ -51,6 +51,12 @@ function App() {
     },
   ]);
 
+  const [replyTarget, setReplyTarget] = useState(-1);
+
+  const toggleReplyMode = (commentIndex: number) => {
+    setReplyTarget((prevTarget) => (prevTarget === commentIndex ? -1 : commentIndex));
+  };
+
   const myUserData = [
     {
       image: imageJuliusomo,
@@ -138,7 +144,7 @@ function App() {
                     <h4 className='username'>{item.username}</h4>
                     <p className='date'>{item.date}</p>
                   </div>
-                  <div className='reply-desktop'>
+                  <div className='reply-desktop' onClick={() => toggleReplyMode(index)}>
                       <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
                       <h4>Reply</h4>
                   </div>
@@ -152,7 +158,7 @@ function App() {
                     <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
                     <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
                   </div>
-                  <div className='reply'>
+                  <div className='reply' onClick={() => toggleReplyMode(index)}>
                     <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
                     <h4>Reply</h4>
                   </div>
@@ -162,11 +168,13 @@ function App() {
         ))}
 
         {/* Reply comment writing */}
-        <div className='comment-item reply-comment'>
-          <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
-          <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
-          <button type="button" className='send-button'>Reply</button>
-        </div>
+        {replyTarget ? (
+          <div className='comment-item reply-comment'>
+            <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
+            <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
+            <button type="button" className='send-button'>Reply</button>
+          </div>
+        ) : null}
 
         <div className='comment-replies-block'>
           <div className='replies-line'></div>
