@@ -60,7 +60,7 @@ function App() {
                   <div className='comment-item-header'>
                     <img src={item.image} className='avatar-img' alt="Avatar Image" />
                     <h4 className='username'>{item.username}</h4>
-                    <p>{item.date}</p>
+                    <p className='date'>{item.date}</p>
                   </div>
                   <div className='reply-desktop'>
                       <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
@@ -102,7 +102,12 @@ function App() {
                     <div className='comment-item-header'>
                       <img src={item.image} className='avatar-img' alt="Avatar Image" />
                       <h4 className='username'>{item.username}</h4>
-                      <p>{item.date}</p>
+                      {item.username === 'juliusomo' && (
+                        <div className='tag-you'>
+                          you
+                        </div>
+                      )}
+                      <p className='date'>{item.date}</p>
                     </div>
                     <div className='reply-desktop'>
                         <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />

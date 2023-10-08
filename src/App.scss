@@ -71,8 +71,20 @@ p {
 }
 
 .username {
-    margin-right: 1rem;
     font-weight: $font-weight-normal;
+}
+
+.tag-you {
+    background-color: $moderate-blue;
+    color: $white;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 13px;
+    margin-left: 0.5rem;
+}
+
+.date {
+    margin-left: 1rem;
 }
 
 .comment-text {
@@ -141,7 +153,6 @@ p {
         max-width: 1px;
         width: 100%;
         height: auto;
-        margin-right: 1rem;
         background-color: $pale-red;
         border-radius: 2px;
     }
@@ -228,13 +239,16 @@ p {
     .reply-desktop {
         display: none;
     }
+    .replies-line {
+        margin-right: 1rem;
+    }
   }
 
 @media (min-width: 768px) {
     .comment-item {
         display: flex;
         flex-direction: row;
-        padding: 1.5rem;
+        padding: 1.5rem 1.5rem 1rem 1.5rem;
     }
 
     .comment-item-footer {
@@ -259,5 +273,9 @@ p {
             color: $moderate-blue;
             font-weight: $font-weight-normal;
         }
+    }
+
+    .replies-line {
+        margin: 0 2.5rem;
     }
 }
