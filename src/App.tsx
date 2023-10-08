@@ -24,6 +24,26 @@ function App() {
     },
   ]
 
+  const replyComments = [
+    {
+      image: imageRamsesmiron,
+      username: 'ramsesmiron',
+      replyUsername: 'maxblagun',
+      date: '1 week ago',
+      comment: 'If you\'re still new, I\'d recommend focusing on the fundamentals of HTML, CSS and JS before considering React. It\'s very tempting to jump ahead but lay a solid foundation first.',
+      numberOfLikes: 4,
+    },
+    {
+      image: imageJuliusomo,
+      username: 'juliusomo',
+      replyUsername: 'ramsesmiron',
+      date: '2 days ago',
+      comment: 'I couldn\'t agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.',
+      numberOfLikes: 2,
+    },
+    
+  ]
+
   return (
     <div className='container'>
       <main>
@@ -69,77 +89,43 @@ function App() {
           <div className='replies-line'></div>
 
           <div className='comment-replies-items'>
-            <div className='comment-item'>
+            {replyComments.map((item: any) => (
+              <div className='comment-item'>
               
-              <div className='likes-counter-desktop'>
-                  <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
-                  <h4 className='number-of-likes'>4</h4>
-                  <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
-              </div>
-              <div>
-                <div className='comment-item-header-desktop'>
-                  <div className='comment-item-header'>
-                    <img src="image-ramsesmiron.png" className='avatar-img' alt="Avatar Image" />
-                    <h4 className='username'>ramsesmiron</h4>
-                    <p>1 week ago</p>
-                  </div>
-                  <div className='reply-desktop'>
-                      <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                      <h4>Reply</h4>
-                  </div>
+                <div className='likes-counter-desktop'>
+                    <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
+                    <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
+                    <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
                 </div>
-                  <p className='comment-text'>
-                    <span className='username-reply'>@maxblagun</span> If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS and JS before considering React. It's very tempting to jump ahead but lay a solid foundation first.
-                  </p>
-                  <div className='comment-item-footer'>
-                    <div className='likes-counter'>
-                      <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
-                      <h4 className='number-of-likes'>4</h4>
-                      <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
+                <div>
+                  <div className='comment-item-header-desktop'>
+                    <div className='comment-item-header'>
+                      <img src={item.image} className='avatar-img' alt="Avatar Image" />
+                      <h4 className='username'>{item.username}</h4>
+                      <p>{item.date}</p>
                     </div>
-                    <div className='reply'>
-                      <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                      <h4>Reply</h4>
+                    <div className='reply-desktop'>
+                        <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
+                        <h4>Reply</h4>
                     </div>
                   </div>
-              </div>
-            </div>
-            
-            <div className='comment-item'>
-              
-              <div className='likes-counter-desktop'>
-                  <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
-                  <h4 className='number-of-likes'>2</h4>
-                  <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
-              </div>
-              <div>
-                  <div className='comment-item-header'>
-                    <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
-                    <h4 className='username'>juliusomo</h4>
-                    <p>2 days ago</p>
-                  </div>
-                  <p className='comment-text'>
-                    <span>@ramsesmiron</span> I couldn't agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.
-                  </p>
-                  <div className='comment-item-footer'>
-                    <div className='likes-counter'>
-                      <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
-                      <h4 className='number-of-likes'>2</h4>
-                      <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
-                    </div>
-                    <div className='message-options'>
-                      <div className='delete'>
-                        <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
-                        <h4>Delete</h4>
+                    <p className='comment-text'>
+                      <span className='username-reply'>@{item.replyUsername}</span> {item.comment}
+                    </p>
+                    <div className='comment-item-footer'>
+                      <div className='likes-counter'>
+                        <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
+                        <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
+                        <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
                       </div>
-                      <div className='edit'>
-                        <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
-                        <h4>Edit</h4>
+                      <div className='reply'>
+                        <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
+                        <h4>Reply</h4>
                       </div>
                     </div>
-                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
 
         </div>

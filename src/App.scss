@@ -199,6 +199,8 @@ p {
 
     .add-comment-block-footer {
         display: flex;
+        text-align: center;
+        align-items: center;
         justify-content: space-between;
 
         .send-button {
