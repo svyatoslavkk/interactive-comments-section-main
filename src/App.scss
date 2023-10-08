@@ -41,7 +41,7 @@ p {
 }
 
 .container {
-    // max-width: 375px;
+    max-width: 1440px;
     width: 100%;
     height: 100vh;
     padding: 20px;
@@ -138,12 +138,20 @@ p {
     text-align: center;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: 0.2s ease;
 
     h4 {
         margin-left: 0.5rem;
         font-weight: $font-weight-normal;
         color: $moderate-blue;
     }
+}
+
+.reply-desktop:hover,
+.reply-desktop:active,
+.reply-desktop:focus {
+    opacity: 0.5;
 }
 
 .comment-replies-block {
