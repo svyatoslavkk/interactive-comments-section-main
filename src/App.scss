@@ -121,6 +121,19 @@ p {
     }
 }
 
+.reply-desktop {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+    h4 {
+        margin-left: 0.5rem;
+        font-weight: $font-weight-normal;
+        color: $moderate-blue;
+    }
+}
+
 .comment-replies-block {
     display: flex;
 
@@ -201,6 +214,48 @@ p {
     }
 }
 
+.comment-item-header-desktop {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .likes-counter-desktop {
+      display: none;
+    }
+    .reply-desktop {
+        display: none;
+    }
+  }
+
 @media (min-width: 768px) {
-    
+    .comment-item {
+        display: flex;
+        flex-direction: row;
+        padding: 1.5rem;
+    }
+
+    .comment-item-footer {
+        display: none;
+    }
+
+    .likes-counter-desktop {
+        max-height: 100px;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        padding: 0.75rem 0.75rem;
+        margin-right: 1.5rem;
+        background-color: $light-gray;
+        border-radius: 0.625rem;
+
+        .icon-plus {
+            margin-bottom: 1rem;
+        }
+        .number-of-likes {
+            margin-bottom: 0.7rem;
+            color: $moderate-blue;
+            font-weight: $font-weight-normal;
+        }
+    }
 }
