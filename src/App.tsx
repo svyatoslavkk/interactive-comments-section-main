@@ -11,6 +11,8 @@ import { replyCommentsArray } from './Data/replyCommentsArray';
 import { voteComments } from './Functions/voteComments';
 import LikesCounterDesktop from './Components/LikesCounterDesktop';
 import LikesCounterMobile from './Components/LikesCounterMobile';
+import ReplyComment from './Components/ReplyComment';
+import ChildReplyComment from './Components/ChildReplyComment';
 
 function App() {
   const [commentsInfo, setCommentsInfo] = useState(commentsInfoArray);
@@ -84,13 +86,7 @@ function App() {
                   </div>
               </div>
             </div>
-            {replyTarget === index && (
-              <div className='comment-item reply-comment'>
-                <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
-                <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
-                <button type="button" className='send-button'>Reply</button>
-              </div>
-            )}
+            <ReplyComment showReply={replyTarget === index} onReply={() => toggleReplyMode(index)} />
           </div>
         ))}
 
@@ -190,13 +186,7 @@ function App() {
                       </div>
                   </div>
                 </div>
-                {childReply === index && (
-                  <div className='comment-item reply-comment'>
-                    <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
-                    <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
-                    <button type="button" className='send-button'>Reply</button>
-                  </div>
-                )}
+                <ChildReplyComment showChildReply={childReply === index} onChildReply={() => togglechildReply(index)} />
                 </div>
               ))}
             </div>
