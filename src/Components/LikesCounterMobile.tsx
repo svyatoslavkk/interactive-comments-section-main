@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { voteComments } from "../Functions/voteComments";
+import { useVoteComments } from "../Functions/useVoteComments";
 
 export default function LikesCounterMobile ({
     index,
     item,
+    handleUpvote,
+    handleDownvote,
   }: any) {
-    const { handleUpvote, handleDownvote } = voteComments();
 
     return (
         <div className='likes-counter'>
@@ -13,14 +14,14 @@ export default function LikesCounterMobile ({
                 src="icon-plus.svg" 
                 className='icon-plus' 
                 alt="Icon Plus" 
-                onClick={() => handleUpvote(index, false)} 
+                onClick={handleUpvote}
             />
             <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
             <img 
                 src="icon-minus.svg" 
                 className='icon-minus' 
                 alt="Icon Minus" 
-                onClick={() => handleDownvote(index, false)} 
+                onClick={handleDownvote} 
             />
         </div>
     )

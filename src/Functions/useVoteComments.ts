@@ -2,9 +2,9 @@ import React, {useState} from "react";
 import { commentsInfoArray } from '../Data/commentsInfoArray';
 import { replyCommentsArray } from '../Data/replyCommentsArray';
 
-export const voteComments = () => {
-    const [commentsInfo, setCommentsInfo] = useState(commentsInfoArray);
-    const [replyComments, setReplyComments] = useState(replyCommentsArray);
+export const useVoteComments = () => {
+  const [commentsInfo, setCommentsInfo] = useState(commentsInfoArray);
+  const [replyComments, setReplyComments] = useState(replyCommentsArray);
 
     const handleUpvote = (commentIndex: any, isReply: any) => {
       if (isReply) {

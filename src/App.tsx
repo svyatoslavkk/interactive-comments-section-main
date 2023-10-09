@@ -8,7 +8,7 @@ import imageRamsesmiron from './image-ramsesmiron.png';
 import AddCommentBlock from './Components/AddCommentBlock';
 import { commentsInfoArray } from './Data/commentsInfoArray';
 import { replyCommentsArray } from './Data/replyCommentsArray';
-import { voteComments } from './Functions/voteComments';
+import { useVoteComments } from './Functions/useVoteComments';
 import LikesCounterDesktop from './Components/LikesCounterDesktop';
 import LikesCounterMobile from './Components/LikesCounterMobile';
 import ReplyComment from './Components/ReplyComment';
@@ -25,7 +25,7 @@ function App() {
   const [editedComment, setEditedComment] = useState('');
   const [editIndex, setEditIndex] = useState(-1);
 
-  const { handleUpvote, handleDownvote } = voteComments();
+  const { handleUpvote, handleDownvote } = useVoteComments();
 
   const toggleReplyMode = (commentIndex: number) => {
     setReplyTarget((prevTarget) => (prevTarget === commentIndex ? -1 : commentIndex));
@@ -60,9 +60,13 @@ function App() {
         {commentsInfo.map((item: any, index) => (
           <div className='comment-block'>
             <div className='comment-item' key={index}>
-              <LikesCounterDesktop index={index} item={item} />
+              <LikesCounterDesktop 
+                index={index} 
+                item={item}
+                handleUpvote={() => handleUpvote(index, false)}
+                handleDownvote={() => handleDownvote(index, false)} 
+              />
               <div>
-                
                   <div className='comment-item-header-desktop'>
                     <div className='comment-item-header'>
                       <img src={item.image} className='avatar-img' alt="Avatar Image" />
@@ -75,10 +79,15 @@ function App() {
                     </div>
                   </div>
                   <p className='comment-text'>
-                    {item.comment}
+                    {item.comment} 
                   </p>
                   <div className='comment-item-footer'>
-                    <LikesCounterMobile index={index} item={item} />
+                    <LikesCounterMobile 
+                      index={index} 
+                      item={item} 
+                      handleUpvote={() => handleUpvote(index, false)}
+                      handleDownvote={() => handleDownvote(index, false)} 
+                    />
                     <div className='reply' onClick={() => toggleReplyMode(index)}>
                       <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply"  />
                       <h4>Reply</h4>
@@ -100,7 +109,12 @@ function App() {
                 
               <div className='comment-block'>
                 <div className='comment-item' key={index}>
-                  <LikesCounterDesktop index={index} item={item} />
+                  <LikesCounterDesktop 
+                    index={index} 
+                    item={item}
+                    handleUpvote={() => handleUpvote(index, false)}
+                    handleDownvote={() => handleDownvote(index, false)} 
+                  />
                   <div>
                     <div className='comment-item-header-desktop'>
                       <div className='comment-item-header'>
@@ -151,21 +165,12 @@ function App() {
                       </p>
 
                       <div className='comment-item-footer'>
-                        <div className='likes-counter'>
-                          <img 
-                            src="icon-plus.svg" 
-                            className='icon-plus' 
-                            alt="Icon Plus" 
-                            onClick={() => handleUpvote(index, false)} 
-                          />
-                          <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
-                          <img 
-                            src="icon-minus.svg" 
-                            className='icon-minus' 
-                            alt="Icon Minus" 
-                            onClick={() => handleDownvote(index, false)}
-                          />
-                        </div>
+                        <LikesCounterMobile 
+                          index={index} 
+                          item={item} 
+                          handleUpvote={() => handleUpvote(index, false)}
+                          handleDownvote={() => handleDownvote(index, false)} 
+                        />
                         {item.username === 'juliusomo' ? (
                           <div className='message-options'>
                             <div className='delete'>
