@@ -6,51 +6,12 @@ import imageJuliusomo from './image-juliusomo.png';
 import imageMaxblagun from './image-maxblagun.png';
 import imageRamsesmiron from './image-ramsesmiron.png';
 import AddCommentBlock from './Components/AddCommentBlock';
+import { commentsInfoArray } from './Data/commentsInfoArray';
+import { replyCommentsArray } from './Data/replyCommentsArray';
 
 function App() {
-  const [commentsInfo, setCommentsInfo] = useState([
-    {
-      image: imageAmyrobson,
-      username: 'amyrobson',
-      date: '1 month ago',
-      comment: 'Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You\'ve nailed the design and the responsiveness at various breakpoints works really well.',
-      numberOfLikes: 12,
-      hasUpvoted: false,
-      hasDownvoted: false,
-    },
-    {
-      image: imageMaxblagun,
-      username: 'maxblagun',
-      date: '2 weeks ago',
-      comment: 'Woah, your project looks awesome! How long have you been coding for? I\'m still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React?\nThanks!',
-      numberOfLikes: 5,
-      hasUpvoted: false,
-      hasDownvoted: false,
-    },
-  ]);
-
-  const [replyComments, setReplyComments] = useState([
-    {
-      image: imageRamsesmiron,
-      username: 'ramsesmiron',
-      replyUsername: 'maxblagun',
-      date: '1 week ago',
-      comment: 'If you\'re still new, I\'d recommend focusing on the fundamentals of HTML, CSS and JS before considering React. It\'s very tempting to jump ahead but lay a solid foundation first.',
-      numberOfLikes: 4,
-      hasUpvoted: false,
-      hasDownvoted: false,
-    },
-    {
-      image: imageJuliusomo,
-      username: 'juliusomo',
-      replyUsername: 'ramsesmiron',
-      date: '2 days ago',
-      comment: 'I couldn\'t agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.',
-      numberOfLikes: 2,
-      hasUpvoted: false,
-      hasDownvoted: false,
-    },
-  ]);
+  const [commentsInfo, setCommentsInfo] = useState(commentsInfoArray);
+  const [replyComments, setReplyComments] = useState(replyCommentsArray);
 
   const [replyTarget, setReplyTarget] = useState(-1);
   const [childReply, setChildReply] = useState(-1);
@@ -120,10 +81,12 @@ function App() {
   };
 
   const toggleEdit = (item: any, index: any) => {
-    setIsEditing(!isEditing);
-    if (!isEditing) {
-      setEditedComment(item.comment);
-      setEditIndex(index);
+    if (item.username === 'juliusomo') {
+      setIsEditing(!isEditing);
+      if (!isEditing) {
+        setEditedComment(item.comment);
+        setEditIndex(index);
+      }
     }
   };
   
@@ -242,7 +205,7 @@ function App() {
                               <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
                               <h4>Delete</h4>
                             </div>
-                            {isEditing ? (
+                            {isEditing && editIndex === index ? (
                               <button type="button" className='send-button' onClick={handleUpdateComment}>
                                 Update
                               </button>
@@ -262,15 +225,15 @@ function App() {
                     </div>
 
                       <p className='comment-text'>
-                      {isEditing ? (
-                        <textarea
-                          className='add-comment-input'
-                          value={editedComment}
-                          onChange={(e) => setEditedComment(e.target.value)}
-                        ></textarea>
-                      ) : (
-                        <p><span className='username-reply'>@{item.replyUsername}</span>{item.comment}</p>
-                      )}
+                        {isEditing && editIndex === index ? (
+                          <textarea
+                            className='add-comment-input'
+                            value={editedComment}
+                            onChange={(e) => setEditedComment(e.target.value)}
+                          ></textarea>
+                        ) : (
+                          <p><span className='username-reply'>@{item.replyUsername}</span>{item.comment}</p>
+                        )}
                       </p>
 
                       <div className='comment-item-footer'>
@@ -301,9 +264,9 @@ function App() {
                 </div>
                 {childReply === index && (
                   <div className='comment-item reply-comment'>
-                  <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
-                  <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
-                  <button type="button" className='send-button'>Reply</button>
+                    <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
+                    <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
+                    <button type="button" className='send-button'>Reply</button>
                   </div>
                 )}
                 </div>
