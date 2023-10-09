@@ -48,15 +48,10 @@ p {
     padding: 20px;
 }
 
-.comment-block {
-    margin-bottom: 1rem;
-}
-
 .comment-item {
     background-color: $white;
     padding: 15px;
     border-radius: 8px;
-    margin-bottom: 1rem;
 }
 
 .comment-item:last-child {
@@ -265,6 +260,7 @@ p {
 
 
 .add-comment-block {
+    display: flex;
     background-color: $white;
     padding: 15px;
     border-radius: 8px;
@@ -324,6 +320,14 @@ p {
 .send-button:active,
 .send-button:focus {
     opacity: $opacity-level;
+}
+
+.comment-block {
+    display: flex;
+}
+
+.comment-content {
+    padding-bottom: 1rem;
 }
 
 @media (max-width: 768px) {

@@ -13,6 +13,8 @@ import LikesCounterDesktop from './Components/LikesCounterDesktop';
 import LikesCounterMobile from './Components/LikesCounterMobile';
 import ReplyComment from './Components/ReplyComment';
 import ChildReplyComment from './Components/ChildReplyComment';
+import RepliesLine from './Components/RepliesLine';
+import MessageOptionsMobile from './Components/MessageOptionsMobile';
 
 function App() {
   const [commentsInfo, setCommentsInfo] = useState(commentsInfoArray);
@@ -59,211 +61,86 @@ function App() {
       <main>
         {commentsInfo.map((item: any, index) => (
           <div className='comment-block'>
-            {item.replyStatus ? (
-            <div className='replies-line'></div>
-            ): ("")}
-            <div className='comment-item' key={index}>
-              <LikesCounterDesktop 
-                index={index} 
-                item={item}
-                handleUpvote={() => handleUpvote(index, false)}
-                handleDownvote={() => handleDownvote(index, false)} 
-              />
-              <div>
-                  <div className='comment-item-header-desktop'>
-                    <div className='comment-item-header'>
-                      <img src={item.image} className='avatar-img' alt="Avatar Image" />
-                      <h4 className='username'>{item.username}</h4>
-                      {item.username === 'juliusomo' && (
-                          <div className='tag-you'>
-                            you
-                          </div>
-                        )}
-                      <p className='date'>{item.date}</p>
-                    </div>
-                    {item.username === 'juliusomo' ? (
-                          <div className='message-options-desktop'>
-                            <div className='delete'>
-                              <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
-                              <h4>Delete</h4>
-                            </div>
-                            {isEditing && editIndex === index ? (
-                              <button type="button" className='send-button' onClick={handleUpdateComment}>
-                                Update
-                              </button>
-                            ) : (
-                              <div className='edit'  onClick={() => toggleEdit(item, index)}>
-                                <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
-                                <h4>Edit</h4>
-                              </div>
-                            )}
-                          </div>
-                      ) : (
-                        <div className='reply-desktop'  onClick={() => togglechildReply(index)}>
-                            <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                            <h4>Reply</h4>
-                        </div>
-                      )}
-                  </div>
-                  <p className='comment-text'>
-                        {isEditing && editIndex === index ? (
-                          <textarea
-                            className='add-comment-input'
-                            value={editedComment}
-                            onChange={(e) => setEditedComment(e.target.value)}
-                          ></textarea>
-                        ) : (
-                          <p>
-                            <span className='username-reply'>
-                            {item.replyUsername ? (
-                              <span className='username-reply'>
-                                @{item.replyUsername}
-                              </span>
-                            ) : null}
-                            </span> {item.comment}
-                          </p>
-                        )}
-                      </p>
-                  <div className='comment-item-footer'>
-                    <LikesCounterMobile 
-                      index={index} 
-                      item={item} 
-                      handleUpvote={() => handleUpvote(index, false)}
-                      handleDownvote={() => handleDownvote(index, false)} 
-                    />
-                    {item.username === 'juliusomo' ? (
-                          <div className='message-options'>
-                            <div className='delete'>
-                              <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
-                              <h4>Delete</h4>
-                            </div>
-                            <div className='edit'>
-                              <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
-                              <h4>Edit</h4>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className='reply'  onClick={() => togglechildReply(index)}>
-                            <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                            <h4>Reply</h4>
-                          </div>
-                        )}
-                  </div>
-              </div>
-            </div>
-            <ReplyComment showReply={replyTarget === index} onReply={() => toggleReplyMode(index)} />
-          </div>
-        ))}
-
-          
-        <div className='comment-replies-block'>
-          <div className='replies-line'></div>
-
-          <div>
-            <div className='comment-replies-items'>
-              {replyComments.map((item: any, index) => (
-                
-              <div className='comment-block'>
-                <div className='comment-item' key={index}>
-                  <LikesCounterDesktop 
-                    index={index} 
-                    item={item}
-                    handleUpvote={() => handleUpvote(index, false)}
-                    handleDownvote={() => handleDownvote(index, false)} 
-                  />
-                  <div>
+            {RepliesLine(item.replyStatus)}
+            <div className='comment-content'>
+              <div className='comment-item' key={index}>
+                <LikesCounterDesktop 
+                  index={index} 
+                  item={item}
+                  handleUpvote={() => handleUpvote(index, false)}
+                  handleDownvote={() => handleDownvote(index, false)} 
+                />
+                <div>
                     <div className='comment-item-header-desktop'>
                       <div className='comment-item-header'>
                         <img src={item.image} className='avatar-img' alt="Avatar Image" />
                         <h4 className='username'>{item.username}</h4>
                         {item.username === 'juliusomo' && (
-                          <div className='tag-you'>
-                            you
-                          </div>
-                        )}
+                            <div className='tag-you'>
+                              you
+                            </div>
+                          )}
                         <p className='date'>{item.date}</p>
                       </div>
                       {item.username === 'juliusomo' ? (
-                          <div className='message-options-desktop'>
-                            <div className='delete'>
-                              <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
-                              <h4>Delete</h4>
-                            </div>
-                            {isEditing && editIndex === index ? (
-                              <button type="button" className='send-button' onClick={handleUpdateComment}>
-                                Update
-                              </button>
-                            ) : (
-                              <div className='edit'  onClick={() => toggleEdit(item, index)}>
-                                <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
-                                <h4>Edit</h4>
+                            <div className='message-options-desktop'>
+                              <div className='delete'>
+                                <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
+                                <h4>Delete</h4>
                               </div>
-                            )}
+                              {isEditing && editIndex === index ? (
+                                <button type="button" className='send-button' onClick={handleUpdateComment}>
+                                  Update
+                                </button>
+                              ) : (
+                                <div className='edit'  onClick={() => toggleEdit(item, index)}>
+                                  <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
+                                  <h4>Edit</h4>
+                                </div>
+                              )}
+                            </div>
+                        ) : (
+                          <div className='reply-desktop'  onClick={() => toggleReplyMode(index)}>
+                              <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
+                              <h4>Reply</h4>
                           </div>
-                      ) : (
-                        <div className='reply-desktop'  onClick={() => togglechildReply(index)}>
-                            <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                            <h4>Reply</h4>
-                        </div>
-                      )}
+                        )}
                     </div>
-
-                      <p className='comment-text'>
-                        {isEditing && editIndex === index ? (
-                          <textarea
-                            className='add-comment-input'
-                            value={editedComment}
-                            onChange={(e) => setEditedComment(e.target.value)}
-                          ></textarea>
-                        ) : (
-                          <p>
-                            <span className='username-reply'>
-                            {item.replyUsername ? (
+                    <p className='comment-text'>
+                          {isEditing && editIndex === index ? (
+                            <textarea
+                              className='add-comment-input'
+                              value={editedComment}
+                              onChange={(e) => setEditedComment(e.target.value)}
+                            ></textarea>
+                          ) : (
+                            <p>
                               <span className='username-reply'>
-                                @{item.replyUsername}
-                              </span>
-                            ) : null}
-                            </span> {item.comment}
-                          </p>
-                        )}
-                      </p>
-
-                      <div className='comment-item-footer'>
-                        <LikesCounterMobile 
-                          index={index} 
-                          item={item} 
-                          handleUpvote={() => handleUpvote(index, false)}
-                          handleDownvote={() => handleDownvote(index, false)} 
-                        />
-                        {item.username === 'juliusomo' ? (
-                          <div className='message-options'>
-                            <div className='delete'>
-                              <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
-                              <h4>Delete</h4>
-                            </div>
-                            <div className='edit'>
-                              <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
-                              <h4>Edit</h4>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className='reply'  onClick={() => togglechildReply(index)}>
-                            <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                            <h4>Reply</h4>
-                          </div>
-                        )}
-                      </div>
-                  </div>
+                              {item.replyUsername ? (
+                                <span className='username-reply'>
+                                  @{item.replyUsername}
+                                </span>
+                              ) : null}
+                              </span> {item.comment}
+                            </p>
+                          )}
+                        </p>
+                    <div className='comment-item-footer'>
+                      <LikesCounterMobile 
+                        index={index} 
+                        item={item} 
+                        handleUpvote={() => handleUpvote(index, false)}
+                        handleDownvote={() => handleDownvote(index, false)} 
+                      />
+                      <MessageOptionsMobile item={item} index={index} toggleReplyMode={toggleReplyMode} />
+                    </div>
                 </div>
-                <ChildReplyComment showChildReply={childReply === index} onChildReply={() => togglechildReply(index)} />
-                </div>
-              ))}
+              </div>
+              <ReplyComment showReply={replyTarget === index} onReply={() => toggleReplyMode(index)} />
             </div>
           </div>
-
-          </div>
-
-          <AddCommentBlock />
+        ))}
+        <AddCommentBlock />
       </main>
     </div>
   );
