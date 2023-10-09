@@ -173,16 +173,16 @@ p {
     opacity: $opacity-level;
 }
 
+.replies-line {
+    max-width: 1px;
+    width: 100%;
+    height: auto;
+    background-color: $pale-red;
+    border-radius: 2px;
+}
+
 .comment-replies-block {
     display: flex;
-
-    .replies-line {
-        max-width: 1px;
-        width: 100%;
-        height: auto;
-        background-color: $pale-red;
-        border-radius: 2px;
-    }
 }
 
 .message-options {

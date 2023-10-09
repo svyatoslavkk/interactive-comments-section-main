@@ -59,6 +59,9 @@ function App() {
       <main>
         {commentsInfo.map((item: any, index) => (
           <div className='comment-block'>
+            {item.replyStatus ? (
+            <div className='replies-line'></div>
+            ): ("")}
             <div className='comment-item' key={index}>
               <LikesCounterDesktop 
                 index={index} 
@@ -71,6 +74,11 @@ function App() {
                     <div className='comment-item-header'>
                       <img src={item.image} className='avatar-img' alt="Avatar Image" />
                       <h4 className='username'>{item.username}</h4>
+                      {item.username === 'juliusomo' && (
+                          <div className='tag-you'>
+                            you
+                          </div>
+                        )}
                       <p className='date'>{item.date}</p>
                     </div>
                     <div className='reply-desktop' onClick={() => toggleReplyMode(index)}>
