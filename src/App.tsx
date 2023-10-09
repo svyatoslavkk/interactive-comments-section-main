@@ -10,6 +10,7 @@ import { commentsInfoArray } from './Data/commentsInfoArray';
 import { replyCommentsArray } from './Data/replyCommentsArray';
 import { voteComments } from './Functions/voteComments';
 import LikesCounterDesktop from './Components/LikesCounterDesktop';
+import LikesCounterMobile from './Components/LikesCounterMobile';
 
 function App() {
   const [commentsInfo, setCommentsInfo] = useState(commentsInfoArray);
@@ -75,13 +76,9 @@ function App() {
                     {item.comment}
                   </p>
                   <div className='comment-item-footer'>
-                    <div className='likes-counter'>
-                      <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
-                      <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
-                      <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
-                    </div>
+                    <LikesCounterMobile index={index} item={item} />
                     <div className='reply' onClick={() => toggleReplyMode(index)}>
-                      <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
+                      <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply"  />
                       <h4>Reply</h4>
                     </div>
                   </div>
@@ -159,9 +156,19 @@ function App() {
 
                       <div className='comment-item-footer'>
                         <div className='likes-counter'>
-                          <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
+                          <img 
+                            src="icon-plus.svg" 
+                            className='icon-plus' 
+                            alt="Icon Plus" 
+                            onClick={() => handleUpvote(index, false)} 
+                          />
                           <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
-                          <img src="icon-minus.svg" className='icon-minus' alt="Icon Minus" />
+                          <img 
+                            src="icon-minus.svg" 
+                            className='icon-minus' 
+                            alt="Icon Minus" 
+                            onClick={() => handleDownvote(index, false)}
+                          />
                         </div>
                         {item.username === 'juliusomo' ? (
                           <div className='message-options'>
