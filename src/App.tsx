@@ -8,6 +8,7 @@ import imageRamsesmiron from './image-ramsesmiron.png';
 import AddCommentBlock from './Components/AddCommentBlock';
 import { commentsInfoArray } from './Data/commentsInfoArray';
 import { replyCommentsArray } from './Data/replyCommentsArray';
+import { voteComments } from './Functions/voteComments';
 
 function App() {
   const [commentsInfo, setCommentsInfo] = useState(commentsInfoArray);
@@ -20,64 +21,14 @@ function App() {
   const [editedComment, setEditedComment] = useState('');
   const [editIndex, setEditIndex] = useState(-1);
 
+  const { handleUpvote, handleDownvote } = voteComments();
+
   const toggleReplyMode = (commentIndex: number) => {
     setReplyTarget((prevTarget) => (prevTarget === commentIndex ? -1 : commentIndex));
   };
 
   const togglechildReply = (commentIndex: number) => {
     setChildReply((prevTarget) => (prevTarget === commentIndex ? -1 : commentIndex));
-  };
-  
-  const handleUpvote = (commentIndex: any, isReply: any) => {
-    if (isReply) {
-      const updatedReplyComments = [...replyComments];
-      if (!updatedReplyComments[commentIndex].hasUpvoted) {
-        updatedReplyComments[commentIndex].numberOfLikes += 1;
-        updatedReplyComments[commentIndex].hasUpvoted = true;
-        if (updatedReplyComments[commentIndex].hasDownvoted) {
-          updatedReplyComments[commentIndex].numberOfLikes += 1;
-          updatedReplyComments[commentIndex].hasDownvoted = false;
-        }
-        setReplyComments(updatedReplyComments);
-      }
-    } else {
-      const updatedComments = [...commentsInfo];
-      if (!updatedComments[commentIndex].hasUpvoted) {
-        updatedComments[commentIndex].numberOfLikes += 1;
-        updatedComments[commentIndex].hasUpvoted = true;
-        if (updatedComments[commentIndex].hasDownvoted) {
-          updatedComments[commentIndex].numberOfLikes += 1;
-          updatedComments[commentIndex].hasDownvoted = false;
-        }
-        setCommentsInfo(updatedComments);
-      }
-    }
-  };
-
-  const handleDownvote = (commentIndex: any, isReply: any) => {
-    if (isReply) {
-      const updatedReplyComments = [...replyComments];
-      if (!updatedReplyComments[commentIndex].hasDownvoted) {
-        updatedReplyComments[commentIndex].numberOfLikes -= 1;
-        updatedReplyComments[commentIndex].hasDownvoted = true;
-        if (updatedReplyComments[commentIndex].hasUpvoted) {
-          updatedReplyComments[commentIndex].numberOfLikes -= 1;
-          updatedReplyComments[commentIndex].hasUpvoted = false;
-        }
-        setReplyComments(updatedReplyComments);
-      }
-    } else {
-      const updatedComments = [...commentsInfo];
-      if (!updatedComments[commentIndex].hasDownvoted) {
-        updatedComments[commentIndex].numberOfLikes -= 1;
-        updatedComments[commentIndex].hasDownvoted = true;
-        if (updatedComments[commentIndex].hasUpvoted) {
-          updatedComments[commentIndex].numberOfLikes -= 1;
-          updatedComments[commentIndex].hasUpvoted = false;
-        }
-        setCommentsInfo(updatedComments);
-      }
-    }
   };
 
   const toggleEdit = (item: any, index: any) => {
@@ -89,7 +40,6 @@ function App() {
       }
     }
   };
-  
 
   const handleUpdateComment = () => {
     const updatedComments = [...commentsInfo];
