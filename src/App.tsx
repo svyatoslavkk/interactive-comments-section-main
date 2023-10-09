@@ -9,6 +9,7 @@ import AddCommentBlock from './Components/AddCommentBlock';
 import { commentsInfoArray } from './Data/commentsInfoArray';
 import { replyCommentsArray } from './Data/replyCommentsArray';
 import { voteComments } from './Functions/voteComments';
+import LikesCounterDesktop from './Components/LikesCounterDesktop';
 
 function App() {
   const [commentsInfo, setCommentsInfo] = useState(commentsInfoArray);
@@ -56,22 +57,7 @@ function App() {
         {commentsInfo.map((item: any, index) => (
           <div className='comment-block'>
             <div className='comment-item' key={index}>
-              <div className='likes-counter-desktop'>
-                  <img 
-                    src="icon-plus.svg" 
-                    className='icon-plus' 
-                    alt="Icon Plus"
-                    onClick={() => handleUpvote(index, false)}
-                  />
-                  <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
-                  <img 
-                    src="icon-minus.svg" 
-                    className='icon-minus' 
-                    alt="Icon Minus"
-                    onClick={() => handleDownvote(index, false)}
-                  />
-              </div>
-
+              <LikesCounterDesktop index={index} item={item} />
               <div>
                 
                   <div className='comment-item-header-desktop'>
@@ -121,22 +107,7 @@ function App() {
                 
               <div className='comment-block'>
                 <div className='comment-item' key={index}>
-                
-                  <div className='likes-counter-desktop'>
-                      <img 
-                        src="icon-plus.svg" 
-                        className='icon-plus' 
-                        alt="Icon Plus"
-                        onClick={() => handleUpvote(index, true)}
-                      />
-                      <h4 className='number-of-likes'>{item.numberOfLikes}</h4>
-                      <img 
-                        src="icon-minus.svg" 
-                        className='icon-minus' 
-                        alt="Icon Minus"
-                        onClick={() => handleDownvote(index, true)}
-                      />
-                  </div>
+                  <LikesCounterDesktop index={index} item={item} />
                   <div>
                     <div className='comment-item-header-desktop'>
                       <div className='comment-item-header'>
