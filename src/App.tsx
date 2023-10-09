@@ -5,6 +5,7 @@ import imageAmyrobson from './image-amyrobson.png';
 import imageJuliusomo from './image-juliusomo.png';
 import imageMaxblagun from './image-maxblagun.png';
 import imageRamsesmiron from './image-ramsesmiron.png';
+import AddCommentBlock from './Components/AddCommentBlock';
 
 function App() {
   const [commentsInfo, setCommentsInfo] = useState([
@@ -53,6 +54,10 @@ function App() {
 
   const [replyTarget, setReplyTarget] = useState(-1);
   const [childReply, setChildReply] = useState(-1);
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedComment, setEditedComment] = useState('');
+  const [editIndex, setEditIndex] = useState(-1);
 
   const toggleReplyMode = (commentIndex: number) => {
     setReplyTarget((prevTarget) => (prevTarget === commentIndex ? -1 : commentIndex));
@@ -112,6 +117,24 @@ function App() {
         setCommentsInfo(updatedComments);
       }
     }
+  };
+
+  const toggleEdit = (item: any, index: any) => {
+    setIsEditing(!isEditing);
+    if (!isEditing) {
+      setEditedComment(item.comment);
+      setEditIndex(index);
+    }
+  };
+  
+
+  const handleUpdateComment = () => {
+    const updatedComments = [...commentsInfo];
+    updatedComments[editIndex].comment = editedComment;
+    setCommentsInfo(updatedComments);
+  
+    setIsEditing(false);
+    setEditIndex(-1);
   };
 
   return (
@@ -219,10 +242,16 @@ function App() {
                               <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
                               <h4>Delete</h4>
                             </div>
-                            <div className='edit'>
-                              <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
-                              <h4>Edit</h4>
-                            </div>
+                            {isEditing ? (
+                              <button type="button" className='send-button' onClick={handleUpdateComment}>
+                                Update
+                              </button>
+                            ) : (
+                              <div className='edit'  onClick={() => toggleEdit(item, index)}>
+                                <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
+                                <h4>Edit</h4>
+                              </div>
+                            )}
                           </div>
                       ) : (
                         <div className='reply-desktop'  onClick={() => togglechildReply(index)}>
@@ -231,9 +260,19 @@ function App() {
                         </div>
                       )}
                     </div>
+
                       <p className='comment-text'>
-                        <span className='username-reply'>@{item.replyUsername}</span> {item.comment}
+                      {isEditing ? (
+                        <textarea
+                          className='add-comment-input'
+                          value={editedComment}
+                          onChange={(e) => setEditedComment(e.target.value)}
+                        ></textarea>
+                      ) : (
+                        <p><span className='username-reply'>@{item.replyUsername}</span>{item.comment}</p>
+                      )}
                       </p>
+
                       <div className='comment-item-footer'>
                         <div className='likes-counter'>
                           <img src="icon-plus.svg" className='icon-plus' alt="Icon Plus" />
@@ -274,20 +313,7 @@ function App() {
 
           </div>
 
-
-        <div className='add-comment-block'>
-          <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
-          <div className='add-comment-block-footer'>
-            <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
-            <button type="button" className='send-button'>Send</button>
-          </div>
-        </div>
-
-        <div className='add-comment-block-desktop'>
-          <img src="image-juliusomo.png" className='avatar-img' alt="Avatar Image" />
-          <textarea className='add-comment-input' placeholder="Add a comment..."></textarea>
-          <button type="button" className='send-button'>Send</button>
-        </div>
+          <AddCommentBlock />
       </main>
     </div>
   );
