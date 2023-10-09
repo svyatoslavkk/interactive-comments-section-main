@@ -81,14 +81,49 @@ function App() {
                         )}
                       <p className='date'>{item.date}</p>
                     </div>
-                    <div className='reply-desktop' onClick={() => toggleReplyMode(index)}>
-                        <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
-                        <h4>Reply</h4>
-                    </div>
+                    {item.username === 'juliusomo' ? (
+                          <div className='message-options-desktop'>
+                            <div className='delete'>
+                              <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
+                              <h4>Delete</h4>
+                            </div>
+                            {isEditing && editIndex === index ? (
+                              <button type="button" className='send-button' onClick={handleUpdateComment}>
+                                Update
+                              </button>
+                            ) : (
+                              <div className='edit'  onClick={() => toggleEdit(item, index)}>
+                                <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
+                                <h4>Edit</h4>
+                              </div>
+                            )}
+                          </div>
+                      ) : (
+                        <div className='reply-desktop'  onClick={() => togglechildReply(index)}>
+                            <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
+                            <h4>Reply</h4>
+                        </div>
+                      )}
                   </div>
                   <p className='comment-text'>
-                    {item.comment} 
-                  </p>
+                        {isEditing && editIndex === index ? (
+                          <textarea
+                            className='add-comment-input'
+                            value={editedComment}
+                            onChange={(e) => setEditedComment(e.target.value)}
+                          ></textarea>
+                        ) : (
+                          <p>
+                            <span className='username-reply'>
+                            {item.replyUsername ? (
+                              <span className='username-reply'>
+                                @{item.replyUsername}
+                              </span>
+                            ) : null}
+                            </span> {item.comment}
+                          </p>
+                        )}
+                      </p>
                   <div className='comment-item-footer'>
                     <LikesCounterMobile 
                       index={index} 
@@ -96,10 +131,23 @@ function App() {
                       handleUpvote={() => handleUpvote(index, false)}
                       handleDownvote={() => handleDownvote(index, false)} 
                     />
-                    <div className='reply' onClick={() => toggleReplyMode(index)}>
-                      <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply"  />
-                      <h4>Reply</h4>
-                    </div>
+                    {item.username === 'juliusomo' ? (
+                          <div className='message-options'>
+                            <div className='delete'>
+                              <img src="icon-delete.svg" className='icon-delete' alt="Icon Delete" />
+                              <h4>Delete</h4>
+                            </div>
+                            <div className='edit'>
+                              <img src="icon-edit.svg" className='icon-edit' alt="Icon Edit" />
+                              <h4>Edit</h4>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className='reply'  onClick={() => togglechildReply(index)}>
+                            <img src="icon-reply.svg" className='icon-reply' alt="Icon Reply" />
+                            <h4>Reply</h4>
+                          </div>
+                        )}
                   </div>
               </div>
             </div>
@@ -168,7 +216,15 @@ function App() {
                             onChange={(e) => setEditedComment(e.target.value)}
                           ></textarea>
                         ) : (
-                          <p><span className='username-reply'>@{item.replyUsername}</span>{item.comment}</p>
+                          <p>
+                            <span className='username-reply'>
+                            {item.replyUsername ? (
+                              <span className='username-reply'>
+                                @{item.replyUsername}
+                              </span>
+                            ) : null}
+                            </span> {item.comment}
+                          </p>
                         )}
                       </p>
 
